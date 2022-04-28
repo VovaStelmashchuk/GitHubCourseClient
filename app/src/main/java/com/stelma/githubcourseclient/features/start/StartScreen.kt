@@ -5,5 +5,7 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun StartScreen() {
-  Text(text = "Hello Android")
+  Text(
+      text = "Hello Android",
+  )
 }
