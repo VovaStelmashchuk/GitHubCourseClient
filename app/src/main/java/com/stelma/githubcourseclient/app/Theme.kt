@@ -1,4 +1,4 @@
-package com.stelma.gitHubcourseclient.app
+package com.stelma.githubcourseclient.app
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

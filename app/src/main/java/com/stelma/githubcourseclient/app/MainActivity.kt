@@ -1,9 +1,9 @@
-package com.stelma.gitHubcourseclient.app
+package com.stelma.githubcourseclient.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.stelma.gitHubcourseclient.features.start.StartScreen
+import com.stelma.githubcourseclient.features.start.StartScreen
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.stelma.gitHubcourseclient
+package com.stelma.githubcourseclient
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
