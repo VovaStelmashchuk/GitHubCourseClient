@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name" translatable="false">Github</string>
+    <string name="show_more">Show more</string>
+    <string name="show_less">Show less</string>
 </resources>
