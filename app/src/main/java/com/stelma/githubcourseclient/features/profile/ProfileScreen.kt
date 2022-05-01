@@ -4,19 +4,19 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Shapes
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.stelma.githubcourseclient.R
@@ -42,7 +42,7 @@ fun ProfileScreen() {
 private fun ProfileToolbar() {
   Box(
       modifier = Modifier
-          .height(48.dp)
+          .height(32.dp)
           .fillMaxWidth(),
   ) {
     AsyncImage(
@@ -82,34 +82,54 @@ private fun UserBasicInfo() {
 @Composable
 private fun UserAdditionalInfo() {
   Row {
-    Text(
+    UserAdditionalInfoItem(
+        iconId = R.drawable.ic_baseline_business_24,
         text = "Parimatch tech",
-        style = MaterialTheme.typography.subtitle1,
     )
-    Text(
-        modifier = Modifier.padding(start = 16.dp),
+
+    Spacer(modifier = Modifier.width(4.dp))
+
+    UserAdditionalInfoItem(
+        iconId = R.drawable.ic_baseline_location_city_24,
         text = "Ukraine",
-        style = MaterialTheme.typography.subtitle1,
     )
   }
-  Text(
-      modifier = Modifier.padding(top = 4.dp),
+  Spacer(modifier = Modifier.height(4.dp))
+  UserAdditionalInfoItem(
+      iconId = R.drawable.ic_baseline_link_24,
       text = "https://androidstory.buzzsprout.com/",
-      style = MaterialTheme.typography.subtitle1,
   )
-  Text(
-      modifier = Modifier.padding(top = 4.dp),
+  Spacer(modifier = Modifier.height(4.dp))
+  UserAdditionalInfoItem(
+      iconId = R.drawable.ic_baseline_email_24,
       text = "vovochkastemashchuk@gmail.com",
-      style = MaterialTheme.typography.subtitle1,
   )
+  Spacer(modifier = Modifier.height(4.dp))
   Text(
-      modifier = Modifier.padding(top = 4.dp),
       text = "@smallstells",
       style = MaterialTheme.typography.subtitle1,
   )
-  Text(
-      modifier = Modifier.padding(top = 4.dp),
+  Spacer(modifier = Modifier.height(4.dp))
+  UserAdditionalInfoItem(
+      iconId = R.drawable.ic_baseline_people_24,
       text = "26 followers • 9 following",
-      style = MaterialTheme.typography.subtitle1,
   )
+}
+
+@Composable
+private fun UserAdditionalInfoItem(iconId: Int, text: String) {
+  Row {
+    AsyncImage(
+        modifier = Modifier
+            .size(16.dp)
+            .align(Alignment.CenterVertically),
+        model = iconId,
+        contentDescription = null,
+    )
+    Spacer(modifier = Modifier.width(2.dp))
+    Text(
+        text = text,
+        style = MaterialTheme.typography.subtitle1,
+    )
+  }
 }
