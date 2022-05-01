@@ -32,8 +32,6 @@ fun ProfileScreen() {
 
     UserBasicInfo()
 
-    Box(modifier = Modifier.height(48.dp))
-
     UserAdditionalInfo()
   }
 }
@@ -105,9 +103,9 @@ private fun UserAdditionalInfo() {
       text = "vovochkastemashchuk@gmail.com",
   )
   Spacer(modifier = Modifier.height(4.dp))
-  Text(
+  UserAdditionalInfoItem(
+      iconId = R.drawable.ic_twitter_logo,
       text = "@smallstells",
-      style = MaterialTheme.typography.subtitle1,
   )
   Spacer(modifier = Modifier.height(4.dp))
   UserAdditionalInfoItem(
@@ -118,11 +116,10 @@ private fun UserAdditionalInfo() {
 
 @Composable
 private fun UserAdditionalInfoItem(iconId: Int, text: String) {
-  Row {
+  Row(verticalAlignment = Alignment.CenterVertically) {
     AsyncImage(
         modifier = Modifier
-            .size(16.dp)
-            .align(Alignment.CenterVertically),
+            .size(16.dp),
         model = iconId,
         contentDescription = null,
     )
