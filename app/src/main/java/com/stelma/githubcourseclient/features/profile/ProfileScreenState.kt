@@ -11,16 +11,23 @@ data class ProfileUiModel(
     val buttonIconId: Int,
 )
 
-class ProfileScreenState {
+class ProfileScreenState(private val profileStateStorage: ProfileStateStorage) {
 
-  var profileState by mutableStateOf(buildCollapsedProfileState())
+  var profileState by mutableStateOf(
+      createProfileState(profileStateStorage.isAdditionalScreenVisible),
+  )
     private set
 
   fun changeState() {
-    profileState = if (profileState.isAdditionalScreenVisible) {
-      buildCollapsedProfileState()
-    } else {
+    profileState = createProfileState(!profileState.isAdditionalScreenVisible)
+    profileStateStorage.isAdditionalScreenVisible = profileState.isAdditionalScreenVisible
+  }
+
+  private fun createProfileState(isAdditionalInfoVisible: Boolean): ProfileUiModel {
+    return if (isAdditionalInfoVisible) {
       buildExpandProfileState()
+    } else {
+      buildCollapsedProfileState()
     }
   }
 
