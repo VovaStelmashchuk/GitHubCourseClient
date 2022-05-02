@@ -1,7 +1,6 @@
 package com.stelma.githubcourseclient.features.profile
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,7 +23,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.SharedPreferencesCompat
 import coil.compose.AsyncImage
 import com.stelma.githubcourseclient.R
 
@@ -41,13 +39,7 @@ fun ProfileScreen() {
 
     Spacer(modifier = Modifier.height(4.dp))
 
-    val context = LocalContext.current
-
-    val profileScreenState = remember {
-      ProfileScreenState(
-          ProfileStateStorage(context.getSharedPreferences("GithubApp", Context.MODE_PRIVATE)),
-      )
-    }
+    val profileScreenState = rememberProfileScreenState()
 
     Button(
         modifier = Modifier.fillMaxWidth(),
@@ -69,6 +61,16 @@ fun ProfileScreen() {
       Spacer(modifier = Modifier.height(8.dp))
       UserAdditionalInfo()
     }
+  }
+}
+
+@Composable
+private fun rememberProfileScreenState(): ProfileScreenState {
+  val context = LocalContext.current
+  return remember {
+    ProfileScreenState(
+        ProfileStateStorage(context.getSharedPreferences("GithubApp", Context.MODE_PRIVATE)),
+    )
   }
 }
 
