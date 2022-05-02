@@ -11,12 +11,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.stelma.githubcourseclient.R
@@ -32,7 +35,30 @@ fun ProfileScreen() {
 
     UserBasicInfo()
 
-    UserAdditionalInfo()
+    Spacer(modifier = Modifier.height(4.dp))
+
+    val profileScreenState = remember { ProfileScreenState() }
+
+    Button(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = { profileScreenState.changeState() },
+    ) {
+      Row(verticalAlignment = Alignment.CenterVertically) {
+        val profileState = profileScreenState.profileState
+        Text(text = stringResource(id = profileState.buttonTextId))
+        Spacer(modifier = Modifier.width(2.dp))
+        AsyncImage(
+            modifier = Modifier.size(24.dp),
+            model = profileState.buttonIconId,
+            contentDescription = null,
+        )
+      }
+    }
+
+    if (profileScreenState.profileState.isAdditionalScreenVisible) {
+      Spacer(modifier = Modifier.height(8.dp))
+      UserAdditionalInfo()
+    }
   }
 }
 
