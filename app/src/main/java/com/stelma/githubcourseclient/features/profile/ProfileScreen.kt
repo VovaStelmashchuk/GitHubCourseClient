@@ -35,31 +35,38 @@ fun ProfileScreen() {
   ) {
     ProfileToolbar()
 
-    UserBasicInfo()
+    val profileScreenState = rememberProfileScreenState()
+
+    UserBasicInfo(profileScreenState.profileState.userBasicInfoUiModel)
 
     Spacer(modifier = Modifier.height(4.dp))
 
-    val profileScreenState = rememberProfileScreenState()
+    AdditionalControlButton(
+        profileScreenState.profileState.buttonState,
+        profileScreenState::changeState,
+    )
 
-    Button(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = { profileScreenState.changeState() },
-    ) {
-      Row(verticalAlignment = Alignment.CenterVertically) {
-        val profileState = profileScreenState.profileState
-        Text(text = stringResource(id = profileState.buttonTextId))
-        Spacer(modifier = Modifier.width(2.dp))
-        AsyncImage(
-            modifier = Modifier.size(24.dp),
-            model = profileState.buttonIconId,
-            contentDescription = null,
-        )
-      }
-    }
-
-    if (profileScreenState.profileState.isAdditionalScreenVisible) {
+    profileScreenState.profileState.additionalInfoUiModel?.let {
       Spacer(modifier = Modifier.height(8.dp))
-      UserAdditionalInfo()
+      UserAdditionalInfo(it)
+    }
+  }
+}
+
+@Composable
+private fun AdditionalControlButton(buttonState: ButtonState, onClick: () -> Unit) {
+  Button(
+      modifier = Modifier.fillMaxWidth(),
+      onClick = { onClick() },
+  ) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+      Text(text = stringResource(id = buttonState.textId))
+      Spacer(modifier = Modifier.width(2.dp))
+      AsyncImage(
+          modifier = Modifier.size(24.dp),
+          model = buttonState.iconId,
+          contentDescription = null,
+      )
     }
   }
 }
@@ -92,23 +99,23 @@ private fun ProfileToolbar() {
 }
 
 @Composable
-private fun UserBasicInfo() {
+private fun UserBasicInfo(userBasiInfoUiModel: UserBasiInfoUiModel) {
   Row {
     AsyncImage(
         modifier = Modifier
             .background(color = MaterialTheme.colors.background)
             .size(64.dp)
             .clip(CircleShape),
-        model = "https://avatars.githubusercontent.com/u/12096148",
+        model = userBasiInfoUiModel.userAvatarUrl,
         contentDescription = null,
     )
     Column(modifier = Modifier.padding(start = 8.dp)) {
       Text(
-          text = "Volodymyr Stelmashchuk",
+          text = userBasiInfoUiModel.userFullName,
           style = MaterialTheme.typography.h5,
       )
       Text(
-          text = "VovaStelmashchuk",
+          text = userBasiInfoUiModel.username,
           style = MaterialTheme.typography.subtitle1,
       )
     }
@@ -116,39 +123,34 @@ private fun UserBasicInfo() {
 }
 
 @Composable
-private fun UserAdditionalInfo() {
+private fun UserAdditionalInfo(profileAdditionalInfoUiModel: ProfileAdditionalInfoUiModel) {
   Row {
     UserAdditionalInfoItem(
         iconId = R.drawable.ic_baseline_business_24,
-        text = "Parimatch tech",
+        text = profileAdditionalInfoUiModel.company,
     )
 
     Spacer(modifier = Modifier.width(4.dp))
 
     UserAdditionalInfoItem(
         iconId = R.drawable.ic_baseline_location_city_24,
-        text = "Ukraine",
+        text = profileAdditionalInfoUiModel.location,
     )
   }
   Spacer(modifier = Modifier.height(4.dp))
   UserAdditionalInfoItem(
       iconId = R.drawable.ic_baseline_link_24,
-      text = "https://androidstory.buzzsprout.com/",
-  )
-  Spacer(modifier = Modifier.height(4.dp))
-  UserAdditionalInfoItem(
-      iconId = R.drawable.ic_baseline_email_24,
-      text = "vovochkastemashchuk@gmail.com",
+      text = profileAdditionalInfoUiModel.blogUrl,
   )
   Spacer(modifier = Modifier.height(4.dp))
   UserAdditionalInfoItem(
       iconId = R.drawable.ic_twitter_logo,
-      text = "@smallstells",
+      text = profileAdditionalInfoUiModel.twitterUsername,
   )
   Spacer(modifier = Modifier.height(4.dp))
   UserAdditionalInfoItem(
       iconId = R.drawable.ic_baseline_people_24,
-      text = "26 followers • 9 following",
+      text = profileAdditionalInfoUiModel.connectionInfo,
   )
 }
 

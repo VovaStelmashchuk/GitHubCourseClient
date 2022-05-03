@@ -3,47 +3,45 @@ package com.stelma.githubcourseclient.features.profile
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.stelma.githubcourseclient.R
 
-data class ProfileUiModel(
-    val isAdditionalScreenVisible: Boolean,
-    val buttonTextId: Int,
-    val buttonIconId: Int,
-)
+class ProfileScreenState(profileStateStorage: ProfileStateStorage) {
 
-class ProfileScreenState(private val profileStateStorage: ProfileStateStorage) {
+  private var isAdditionalVisible: Boolean = profileStateStorage.isAdditionalScreenVisible
+    set(value) {
+      field = value
+      profileState = createProfileState(value)
+    }
 
   var profileState by mutableStateOf(
-      createProfileState(profileStateStorage.isAdditionalScreenVisible),
+      createProfileState(isAdditionalVisible),
   )
     private set
 
   fun changeState() {
-    profileState = createProfileState(!profileState.isAdditionalScreenVisible)
-    profileStateStorage.isAdditionalScreenVisible = profileState.isAdditionalScreenVisible
+    isAdditionalVisible = !isAdditionalVisible
   }
 
   private fun createProfileState(isAdditionalInfoVisible: Boolean): ProfileUiModel {
-    return if (isAdditionalInfoVisible) {
-      buildExpandProfileState()
+    val additionalInfo = if (isAdditionalInfoVisible) {
+      ProfileAdditionalInfoUiModel(
+          company = "Parimatch tech",
+          blogUrl = "https://androidstory.buzzsprout.com/",
+          location = "Ukraine",
+          twitterUsername = "@smallstells",
+          connectionInfo = "26 followers • 9 following",
+      )
     } else {
-      buildCollapsedProfileState()
+      null
     }
-  }
 
-  private fun buildExpandProfileState(): ProfileUiModel {
     return ProfileUiModel(
-        true,
-        R.string.show_less,
-        R.drawable.ic_baseline_arrow_drop_up_24,
-    )
-  }
-
-  private fun buildCollapsedProfileState(): ProfileUiModel {
-    return ProfileUiModel(
-        false,
-        R.string.show_more,
-        R.drawable.ic_baseline_arrow_drop_down_24,
+        userBasicInfoUiModel = UserBasiInfoUiModel(
+            userAvatarUrl = "https://avatars.githubusercontent.com/u/12096148",
+            userFullName = "Volodymyr Stelmashchuk",
+            username = "VovaStelmashchuk",
+        ),
+        buttonState = if (isAdditionalInfoVisible) ButtonState.SHOW_LESS else ButtonState.SHOW_MORE,
+        additionalInfoUiModel = additionalInfo,
     )
   }
 }
