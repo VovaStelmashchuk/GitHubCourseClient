@@ -17,6 +17,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -74,9 +75,11 @@ private fun AdditionalControlButton(buttonState: ButtonState, onClick: () -> Uni
 @Composable
 private fun rememberProfileScreenState(): ProfileScreenState {
   val context = LocalContext.current
+  val scope = rememberCoroutineScope()
   return remember {
     ProfileScreenState(
         ProfileStateStorage(context.getSharedPreferences("GithubApp", Context.MODE_PRIVATE)),
+        scope,
     )
   }
 }

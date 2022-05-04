@@ -3,13 +3,22 @@ package com.stelma.githubcourseclient.features.profile
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class ProfileScreenState(profileStateStorage: ProfileStateStorage) {
+class ProfileScreenState(
+    profileStateStorage: ProfileStateStorage,
+    private val scope: CoroutineScope,
+) {
 
   private var isAdditionalVisible: Boolean = profileStateStorage.isAdditionalScreenVisible
     set(value) {
       field = value
-      profileState = createProfileState(value)
+      scope.launch {
+        delay(1000)
+        profileState = createProfileState(value)
+      }
     }
 
   var profileState by mutableStateOf(
