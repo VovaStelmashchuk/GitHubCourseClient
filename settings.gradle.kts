@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "GitHubCourseClient"
-include ':app'
+include(":app")

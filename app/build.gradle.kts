@@ -6,7 +6,7 @@ plugins {
 val composeVersion = "1.1.1"
 
 android {
-  compileSdkVersion(31)
+  compileSdk = 31
 
   defaultConfig {
     applicationId = "com.stelma.GitHubCourseClient"
