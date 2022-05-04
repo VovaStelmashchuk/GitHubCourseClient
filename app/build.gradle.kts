@@ -10,8 +10,8 @@ android {
 
   defaultConfig {
     applicationId = "com.stelma.GitHubCourseClient"
-    minSdkVersion(22)
-    targetSdkVersion(31)
+    minSdk = 22
+    targetSdk = 31
     versionCode = 1
     versionName = "1.0"
 
